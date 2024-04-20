@@ -8,7 +8,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("IOEHIOFHIS")
-    fetch("http://localhost:5000/bite").then(
+    fetch("http://localhost:5000/").then(
       res => res.json()
     ).then(
       data => {
@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Bug Bite Type:</Text>
+      <Text>Disease Type:</Text>
       <Text>{output}</Text>
       <StatusBar style="auto" />
     </View>
