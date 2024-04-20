@@ -1,0 +1,39 @@
+/* HistoryPage.css */
+.history-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .title {
+    background-color: #b27e30;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+  }
+  
+  .wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  
+  .log {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Navbar styling */
+  /* Adjust as needed */
+  .navbar {
+    background-color: #b27e30;
+    color: #fff;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  
