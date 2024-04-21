@@ -4,17 +4,24 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from inference_sdk import InferenceHTTPClient
+import urllib.request
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/upload-image", methods=["POST"])
+file_path = 'image.jpg'
+
+@app.route("/upload", methods=["POST"])
 def upload_image():
 
     print(f"Request URL: {request.url}")  # Log the request URL
-    print("FILES",request.files)
-    print("FORM",request.form)
-    print("HEADERS",request.headers)
+    uri = request.data.decode("utf-8")
+    print(uri[0:500])
+    response = urllib.request.urlopen(uri)
+    with open('image.jpg', 'wb') as f:
+        f.write(response.file.read())
+    #uri.save("uploaded.jpg")
+    """
     print("something")
     jj = request.files
     print(jj)
@@ -32,10 +39,9 @@ def upload_image():
     if image_file:
         # Save the uploaded image file to a desired location
         image_file.save("uploaded-image.png")
-
-        return jsonify({"message": "Image uploaded successfully"}), 200
+    """
+    return jsonify({"message": "Image uploaded successfully"}), 200
     
-
 @app.route("/bite")
 def bite():
     

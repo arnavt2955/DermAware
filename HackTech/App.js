@@ -6,8 +6,6 @@ import {shareAsync } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import axios from 'axios'; // No need for require, use import
-import { initializeApp } from '@react-native-firebase/app';
-import storage from '@react-native-firebase/storage';
 
 
 export default function App() {
@@ -26,18 +24,7 @@ export default function App() {
       setHasCameraPermission(cameraPermission.status === "granted");
       setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
     })();
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAlE9inTWxMwvhdraxtiAVz6KSASc_zjH8",
-      authDomain: "hacktech-15c3a.firebaseapp.com",
-      projectId: "hacktech-15c3a",
-      storageBucket: "hacktech-15c3a.appspot.com",
-      messagingSenderId: "605948840822",
-      appId: "1:605948840822:web:7692b2118c1b45b3e30857",
-      measurementId: "G-9J3DLFTMBK"
-    };
 
-    initializeApp(firebaseConfig);
 
   }, []);
 
@@ -79,54 +66,30 @@ export default function App() {
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
   };
-  const uploadImageToFirebase = async (imageUri) => {
-    try {
-        const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-        const storageRef = storage().ref(`images/${filename}`);
-        const task = storageRef.putFile(imageUri);
 
-        task.on('state_changed', snapshot => {
-            console.log(`Uploaded: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100}%`);
-        });
+const sendPhotoToBackend = async (photoUri) => {
+  const requestOptions = {
+      method: 'POST',
+      body: photoUri,
+      headers: {
+          'Content-Type': 'multipart/form-data',
+      },
+  };
 
-        await task;
-
-        console.log('Image uploaded to Firebase Storage');
-    } catch (error) {
-        console.error('Error uploading image to Firebase Storage:', error);
-    }
+  try {
+      const response = await fetch('http://127.0.0.1:5000/upload', requestOptions);
+      if (response.ok) {
+          console.log('Photo uploaded successfully');
+          const responseData = await response.json();
+          console.log(responseData);
+      } else {
+          console.error('Failed to upload photo:', response.status);
+      }
+  } catch (error) {
+      console.error('Error uploading photo:', error);
+  }
 };
 
-  const sendPhotoToBackend = async (photoUri) => {
-    const formData = new FormData();
-    const photo = {
-        uri: photoUri,
-        type: 'image/jpeg', // Adjust the MIME type according to your image format
-        name: 'uploaded-photo.jpg', // Adjust the filename as needed
-    };
-    formData.append('image', photo);
-
-    const requestOptions = {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    };
-
-    try {
-        const response = await fetch('http://localhost:5000/upload-image', requestOptions);
-        if (response.ok) {
-            console.log('Photo uploaded successfully');
-            const responseData = await response.json();
-            console.log(responseData);
-        } else {
-            console.error('Failed to upload photo:', response.status);
-        }
-    } catch (error) {
-        console.error('Error uploading photo:', error);
-    }
-};
 
   if (photo) {
     //uploadImageToFirebase(photo.uri);
