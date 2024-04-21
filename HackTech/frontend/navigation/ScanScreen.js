@@ -7,7 +7,7 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import axios from 'axios'; // No need for require, use import
 
-
+const prevDiseases = []
 export default function ScanScreen({navigation}) {
   const [output, setOutput] = useState("Not ready");
   let cameraRef = useRef();
@@ -46,7 +46,7 @@ export default function ScanScreen({navigation}) {
       data => {
         console.log("bro");
         setOutput(data.data[0]);
-        console.log(data);
+        //console.log(data);
       }
     )
   }, []);
@@ -65,6 +65,7 @@ export default function ScanScreen({navigation}) {
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
+    
   };
 
 const sendPhotoToBackend = async (photoUri) => {
@@ -94,7 +95,7 @@ const sendPhotoToBackend = async (photoUri) => {
   if (photo) {
     //uploadImageToFirebase(photo.uri);
     sendPhotoToBackend(photo.uri);
-    console.log(photo);
+    //console.log(photo);
     /*let savePhoto = () => {
       MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
         setPhoto(undefined);
@@ -108,8 +109,10 @@ const sendPhotoToBackend = async (photoUri) => {
     );*/
   }
 
-  
-
+  if ((output !== 'Not Ready')){
+    prevDiseases.push(output)
+  }
+  console.log(prevDiseases)
   return (
     <View style={styles.container}>
       <Camera ref={cameraRef} style={styles.cam} onPress={handleDoubleTap} type={cameraType}>
@@ -152,3 +155,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
+export {prevDiseases}
