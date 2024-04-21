@@ -17,6 +17,10 @@ function NavBar() {
         <FontAwesomeIcon icon={faHistory} style={styles.icon} />
         <Text style={styles.navText}>History</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('Steps')}>
+        <Text style={styles.logoText}>Logo</Text>
+        <Text style={styles.navText}>Steps</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('Scan')}>
         <FontAwesomeIcon icon={faSearch} style={styles.icon} />
         <Text style={styles.navText}>Scan</Text>
@@ -25,7 +29,7 @@ function NavBar() {
         <FontAwesomeIcon icon={faInfo} style={styles.icon} />
         <Text style={styles.navText}>Info</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('Log')}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('QuickLog')}>
         <FontAwesomeIcon icon={faBook} style={styles.icon} />
         <Text style={styles.navText}>Quick Log</Text>
       </TouchableOpacity>
@@ -52,6 +56,12 @@ const styles = StyleSheet.create({
   navText: {
     color: '#fff',
     fontSize: 16,
+  },
+  logoText: {
+    marginRight: 5,
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

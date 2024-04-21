@@ -1,30 +1,34 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { useState, useEffect } from 'react';
-import axios from 'axios'; // No need for require, use import
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
-  const [output, setOutput] = useState("Not ready");
-
-  useEffect(() => {
-    console.log("IOEHIOFHIS")
-    fetch("http://localhost:5000/").then(
-      res => res.json()
-    ).then(
-      data => {
-        console.log("bro");
-        setOutput(data.data[0]);
-        console.log(data);
-      }
-    )
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Disease Type:</Text>
-      <Text>{output}</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+        <StatusBar style="auto" />
+        <View style={styles.navbar}>
+          {/* Navigation bar content */}
+          <TouchableOpacity onPress={() => navigation.navigate('History')}>
+            <Text style={styles.navText}>History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Steps')}>
+            <Text style={styles.navText}>Steps</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Scan')}>
+            <Text style={styles.navText}>Scan</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Info')}>
+            <Text style={styles.navText}>Info</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('QuickLog')}>
+            <Text style={styles.navText}>Quick Log</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </NavigationContainer>
   );
 }
 
@@ -34,5 +38,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  navbar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#ccc', // Example background color
+    height: 50, // Example height
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  navText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333', // Example text color
   },
 });
