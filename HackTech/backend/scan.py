@@ -73,7 +73,7 @@ def bite():
     api_key="FfleKWifdGwhsjXLXNdA"
     )
 
-    result = CLIENT.infer('disease.jpeg', model_id="skin_disease_ak/1")
+    result = CLIENT.infer("image.jpg", model_id="skin_disease_ak/1")
     
     return {"data": [result['predictions'][0]['class']]}
 if __name__ == "__main__":
