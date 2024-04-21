@@ -7,7 +7,36 @@ from inference_sdk import InferenceHTTPClient
 
 app = Flask(__name__)
 CORS(app)
-@app.route("/")
+
+@app.route("/upload-image", methods=["POST"])
+def upload_image():
+
+    print(f"Request URL: {request.url}")  # Log the request URL
+    print("FILES",request.files)
+    print("FORM",request.form)
+    print("HEADERS",request.headers)
+    print("something")
+    jj = request.files
+    print(jj)
+    
+    if "image" not in request.files:
+        print("No image file provided")
+        return jsonify({"error": "No image file provided"}), 400
+
+    image_file = request.files["image"]
+
+    if image_file.filename == "":
+        print("No selected file")
+        return jsonify({"error": "No selected file"}), 400
+
+    if image_file:
+        # Save the uploaded image file to a desired location
+        image_file.save("uploaded-image.png")
+
+        return jsonify({"message": "Image uploaded successfully"}), 200
+    
+
+@app.route("/bite")
 def bite():
     
     '''rf = Roboflow(api_key="qv6x4NNesbNtb88SH6sx")
