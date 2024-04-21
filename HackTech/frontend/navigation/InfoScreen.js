@@ -218,7 +218,7 @@ export default function InfoScreen({ navigation }) {
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.name}</Text>
                     {expanded[index] && (
                         <View>
-                            <Text style={{ marginTop: 5 }}>
+                            <Text style={{ marginTop: 10 }}>
                                 <Text style={{ fontWeight: 'bold' }}>Areas Affected:</Text> {areasAffected}
                             </Text>
                             <Text style={{ marginTop: 5 }}>
@@ -247,3 +247,4 @@ export default function InfoScreen({ navigation }) {
         </View>
     );
 }
+
