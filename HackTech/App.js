@@ -1,30 +1,32 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef, useNavigation } from '@react-navigation/native';
+import MainContainer from './frontend/MainContainer';
 
 export default function App() {
+
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-        <NavBar />
-      </View>
-    </NavigationContainer>
+    <MainContainer/>
   );
 }
 
 function NavBar() {
+  const naviRef = createNavigationContainerRef();
   const navigation = useNavigation();
 
   const navigateToScreen = (screenName) => {
-    navigation.navigate(screenName);
+    
+    if (naviRef.isReady()) {
+      console.log("here");
+      navigation.navigate(screenName);
+    }
+    
   };
 
   return (
     <View style={styles.navbar}>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('HistoryPage')}>
+      <TouchableOpacity style={styles.navItem} onPress={() => {navigateToScreen('HistoryPage')}}>
         <Text style={styles.navText}>History</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('StepsPage')}>
