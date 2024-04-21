@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 export default function App() {
   return (
@@ -9,26 +9,37 @@ export default function App() {
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
         <StatusBar style="auto" />
-        <View style={styles.navbar}>
-          {/* Navigation bar content */}
-          <TouchableOpacity onPress={() => navigation.navigate('History')}>
-            <Text style={styles.navText}>History</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Steps')}>
-            <Text style={styles.navText}>Steps</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Scan')}>
-            <Text style={styles.navText}>Scan</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Info')}>
-            <Text style={styles.navText}>Info</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('QuickLog')}>
-            <Text style={styles.navText}>Quick Log</Text>
-          </TouchableOpacity>
-        </View>
+        <NavBar />
       </View>
     </NavigationContainer>
+  );
+}
+
+function NavBar() {
+  const navigation = useNavigation();
+
+  const navigateToScreen = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
+  return (
+    <View style={styles.navbar}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('HistoryPage')}>
+        <Text style={styles.navText}>History</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('StepsPage')}>
+        <Text style={styles.navText}>Steps</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('ScanPage')}>
+        <Text style={styles.navText}>Scan</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('InfoPage')}>
+        <Text style={styles.navText}>Info</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigateToScreen('QuickLogPage')}>
+        <Text style={styles.navText}>Quick Log</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -44,16 +55,18 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#ccc', // Example background color
-    height: 50, // Example height
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#b27e30',
+    paddingVertical: 10,
+  },
+  navItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   navText: {
+    color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333', // Example text color
   },
 });
