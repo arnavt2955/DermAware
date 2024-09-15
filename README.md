@@ -1,1 +1,1 @@
-App for HackTech 2024.
+App for HackTech 2024
