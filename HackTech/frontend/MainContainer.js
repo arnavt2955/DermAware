@@ -8,6 +8,7 @@ import {Ionicons} from '@expo/vector-icons'
 //Screens
 import ScanScreen from './navigation/ScanScreen'
 import HistoryScreen from './navigation/HistoryScreen'
+
 import InfoScreen from './navigation/InfoScreen'
 import QuickLogScreen from './navigation/QuickLogScreen'
 import StepsScreen from './navigation/StepsScreen'
